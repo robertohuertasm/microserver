@@ -1,7 +1,19 @@
 [package]
 name = "microserver"
+description = "A micro server to run from your CLI with support for SPAs. Based on Warp!"
 version = "0.1.0"
 authors = ["Roberto Huertas <roberto.huertas@outlook.com>"]
 edition = "2018"
+license-file = "LICENSE"
+repository = "https://github.com/robertohuertasm/microserver"
+readme = "README.md"
+keywords = ["server", "spa", "local server", "minimal", "simple", "http-server", "live-server", "http", "cli"]
+categories = ["web-programming::http-server", "network-programming"]
+
+[badges]
+maintenance = { status = "actively-developed" }
 
 [dependencies]
+warp = "0.1.7"
+clap = "2.32.0"
+console = "0.6.1"

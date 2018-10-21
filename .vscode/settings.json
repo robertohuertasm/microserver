@@ -1,0 +1,5 @@
+{
+  "rust.clippyArgs": [
+    "--all -- -D clippy::pedantic -A clippy::non-ascii-literal"
+  ]
+}
