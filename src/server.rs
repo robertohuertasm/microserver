@@ -19,7 +19,7 @@ pub fn start(port: Option<u16>, path: Option<String>, is_spa: bool) {
     );
 
     let files = warp::fs::dir(final_path);
-    let spa = warp::any().and(warp::fs::file(spa_index_path));
+    let spa = warp::fs::file(spa_index_path);
 
     let routes = files.or(spa);
 
