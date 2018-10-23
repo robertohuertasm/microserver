@@ -14,29 +14,43 @@ fn main() {
             Arg::with_name("port")
                 .long("port")
                 .short("p")
+                .default_value("9090")
                 .takes_value(true)
-                .help("Sets the port. Defaults to 9090"),
+                .help("Sets the port."),
         )
         .arg(
             Arg::with_name("no-spa")
                 .long("no-spa")
-                .short("ns")
+                .short("n")
                 .help("Removes support for Single Page Applications"),
+        )
+        .arg(
+            Arg::with_name("spa-index")
+                .long("spa-index")
+                .short("i")
+                .default_value("index.html")
+                .takes_value(true)
+                .help("Sets the name of the index document."),
         )
         .arg(
             Arg::with_name("path")
                 .long("path")
                 .short("t")
+                .default_value(".")
                 .help("The path to the files being served")
                 .index(1),
         )
         .get_matches();
 
-    let port = matches.value_of("port").and_then(|x| x.parse::<u16>().ok());
-    let path = matches.value_of("path").and_then(|x| Some(x.to_string()));
+    let port = matches
+        .value_of("port")
+        .and_then(|x| x.parse::<u16>().ok())
+        .unwrap();
+    let path = matches.value_of("path").unwrap();
     let is_spa = !matches.is_present("no-spa");
+    let spa_index = matches.value_of("spa-index").unwrap();
 
     // TODO: verbose & param validations!
 
-    server::start(port, path, is_spa);
+    server::start(port, path.to_owned(), is_spa, spa_index.to_owned());
 }
