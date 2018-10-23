@@ -1,6 +1,6 @@
 [package]
 name = "microserver"
-description = "A micro server to run from your CLI with support for SPAs. Based on Warp!"
+description = "Simple ad-hoc server with SPA support based on Warp!. Excellent for testing React, Angular, Vue apps and the like."
 version = "0.1.0"
 authors = ["Roberto Huertas <roberto.huertas@outlook.com>"]
 edition = "2018"

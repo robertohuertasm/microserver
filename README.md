@@ -1,21 +1,23 @@
 # microserver
 
-Simple ad-hoc server to serve your local files with SPA support. Excellent for testing React, Angular, Vue apps and the like.
+Simple ad-hoc server with SPA support based on Warp! Excellent for testing React, Angular, Vue apps and the like.
 
 ## Usage
 
 ```sh
+# no argument is mandatory: the current folder will be used as default, served in the port 9090
+microserver
+# you can, of course, set the path of the folder you want to be served
 microserver ./path/to/folder
-# if you want to see the different options
+# if you want to get access to help
 microserver -h
-# no argument is mandatory: the current folder will be used as default
 ```
 
 ## Changing the port
 
 ```sh
-microserver -p 3000
 # by default microserver will use 9090 port
+microserver -p 3000
 ```
 
 ## SPA support
