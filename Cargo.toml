@@ -10,6 +10,11 @@ readme = "README.md"
 keywords = ["server", "spa", "local server", "minimal", "simple", "http-server", "live-server", "http", "cli"]
 categories = ["web-programming::http-server", "network-programming"]
 
+exclude = [
+  "index.html",
+  "run.sh"
+]
+
 [badges]
 maintenance = { status = "actively-developed" }
 
