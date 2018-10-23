@@ -17,6 +17,7 @@ exclude = [
 
 [badges]
 maintenance = { status = "actively-developed" }
+travis-ci = { repository = "https://github.com/robertohuertasm/microserver", branch = "master" }
 
 [dependencies]
 warp = "0.1.7"
