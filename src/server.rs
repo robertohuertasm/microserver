@@ -1,7 +1,7 @@
 use console::style;
 use warp::Filter;
 
-pub fn start<'a>(port: u16, path: String, is_spa: bool, spa_index: String) {
+pub fn start(port: u16, path: String, is_spa: bool, spa_index: &str) {
     let spa_index_path = format!("{}/{}", path, spa_index);
     println!(
         "{}",

@@ -51,5 +51,5 @@ fn main() {
     let spa_index = matches.value_of("spa-index").unwrap();
 
     // TODO: verbose & param validations!
-    server::start(port, path.to_owned(), is_spa, spa_index.to_owned());
+    server::start(port, path.to_owned(), is_spa, spa_index);
 }

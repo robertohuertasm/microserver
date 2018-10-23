@@ -7,7 +7,7 @@ edition = "2018"
 license-file = "LICENSE"
 repository = "https://github.com/robertohuertasm/microserver"
 readme = "README.md"
-keywords = ["server", "spa", "local", "minimal", "simple", "http-server", "live-server", "http", "cli"]
+keywords = ["server", "spa", "simple", "http-server", "cli"]
 categories = ["web-programming::http-server", "network-programming"]
 
 exclude = [
