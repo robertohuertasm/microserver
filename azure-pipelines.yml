@@ -1,0 +1,33 @@
+# Starter pipeline
+# Start with a minimal pipeline that you can customize to build and deploy your code.
+# Add steps that build, run tests, deploy, and more:
+# https://aka.ms/yaml
+
+jobs:
+  - job: Linux
+    pool:
+      vmImage: 'Ubuntu 16.04' # other options: 'macOS 10.13', 'VS2017-Win2016'
+
+    steps:
+      - script: curl https://sh.rustup.rs -sSf | sh -s -- -y
+        displayName: 'Install rust'
+
+      - script: |
+          export PATH=$HOME/.cargo/bin:$PATH
+          rustup install nightly
+          rustup default nightly
+        displayName: 'Setting nightly'
+      - script: |
+          export PATH=$HOME/.cargo/bin:$PATH
+          rustup component add rustfmt-preview
+          rustup component add clippy-preview --toolchain=nightly
+        displayName: 'installing Cargo components'
+      - script: |
+          export PATH=$HOME/.cargo/bin:$PATH
+          cargo fmt --all -- --check
+        displayName: 'Cargo fmt'
+      - script: |
+          export PATH=$HOME/.cargo/bin:$PATH
+          cargo clippy --all -- -D clippy::pedantic -A clippy::non-ascii-literal
+        displayName: 'Cargo clippy'
+  # - job: Windows macOS
