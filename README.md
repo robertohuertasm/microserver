@@ -4,6 +4,12 @@ Simple ad-hoc server with SPA support based on Warp! Excellent for testing React
 
 ## Usage
 
+First you will need to install it globally:
+
+```sh
+cargo install microserver
+```
+
 ```sh
 # no argument is mandatory: the current folder will be used as default, served in the port 9090
 microserver
