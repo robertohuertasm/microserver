@@ -17,19 +17,28 @@ jobs:
           rustup install nightly
           rustup default nightly
         displayName: 'Setting nightly'
+
       - script: |
           export PATH=$HOME/.cargo/bin:$PATH
           rustup component add rustfmt-preview
           rustup component add clippy-preview --toolchain=nightly
         displayName: 'installing Cargo components'
+
       - script: |
           export PATH=$HOME/.cargo/bin:$PATH
           cargo fmt --all -- --check
         displayName: 'Cargo fmt'
+
       - script: |
           export PATH=$HOME/.cargo/bin:$PATH
           cargo clippy --all -- -D clippy::pedantic -A clippy::non-ascii-literal
         displayName: 'Cargo clippy'
+
+      - script: |
+          export PATH=$HOME/.cargo/bin:$PATH
+          cargo build --release
+        displayName: 'Build'
+        
       - task: PublishBuildArtifacts@1
         displayName: 'Publish Artifact: microserver'
         inputs:

@@ -11,11 +11,20 @@ matrix:
 before_script:
   - rustup component add rustfmt-preview
   - rustup component add clippy-preview --toolchain=nightly
-script:
-  - cargo fmt --all -- --check
-  - cargo clippy --all -- -D clippy_pedantic
-  - cargo build --release
-  - chmod +x target/release/microserver
+stages:
+  - test
+  - name: deploy
+    if: tag IS present
+jobs:
+  include:
+    - stage: test
+      script: 
+        - cargo fmt --all -- --check
+        - cargo clippy --all -- -D clippy_pedantic
+    - stage: deploy
+      script: 
+        - cargo build --release
+        - chmod +x target/release/microserver
 deploy:
   provider: releases
   api_key: $gh_key
