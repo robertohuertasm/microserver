@@ -30,9 +30,9 @@ jobs:
           export PATH=$HOME/.cargo/bin:$PATH
           cargo clippy --all -- -D clippy::pedantic -A clippy::non-ascii-literal
         displayName: 'Cargo clippy'
-      - task: PublishPipelineArtifact@0
-        displayName: 'Publish Pipeline Artifact'
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Artifact: microserver'
         inputs:
-          artifactName: microserver
-          targetPath: target/release/microserver
+          PathtoPublish: '$(Build.ArtifactStagingDirectory)/target/release/microserver'
+          ArtifactName: microserver
   # - job: Windows macOS
