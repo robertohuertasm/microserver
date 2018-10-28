@@ -30,4 +30,5 @@ jobs:
           export PATH=$HOME/.cargo/bin:$PATH
           cargo clippy --all -- -D clippy::pedantic -A clippy::non-ascii-literal
         displayName: 'Cargo clippy'
+      - task: PublishBuildArtifacts@1
   # - job: Windows macOS
