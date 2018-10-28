@@ -8,9 +8,6 @@ matrix:
   #   - rust: stable
   #   - rust: beta
   fast_finish: true
-before_script:
-  - rustup component add rustfmt-preview
-  - rustup component add clippy-preview --toolchain=nightly
 stages:
   - test
   - name: deploy
@@ -18,20 +15,20 @@ stages:
 jobs:
   include:
     - stage: test
-      script: 
+      before_script:
+        - rustup component add rustfmt-preview
+        - rustup component add clippy-preview --toolchain=nightly
+      script:
         - cargo fmt --all -- --check
         - cargo clippy --all -- -D clippy::pedantic
     - stage: deploy
-      script: 
+      script:
         - cargo build --release
         - chmod +x target/release/microserver
-deploy:
-  provider: releases
-  api_key: $gh_key
-  file: target/release/microserver
-  skip_cleanup: true
-  on:
-    tags: true
-
- 
-
+      deploy:
+        provider: releases
+        api_key: $gh_key
+        file: target/release/microserver
+        skip_cleanup: true
+        on:
+          tags: true
