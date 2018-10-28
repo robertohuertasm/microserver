@@ -20,7 +20,7 @@ jobs:
     - stage: test
       script: 
         - cargo fmt --all -- --check
-        - cargo clippy --all -- -D clippy_pedantic
+        - cargo clippy --all -- -D clippy::pedantic
     - stage: deploy
       script: 
         - cargo build --release

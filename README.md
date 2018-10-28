@@ -5,13 +5,17 @@
 
 Simple ad-hoc server with SPA support based on Warp! Excellent for testing React, Angular, Vue apps and the like.
 
-## Usage
+## Installation
 
-First you will need to install it globally:
+You can compile it yourself:
 
 ```sh
 cargo install microserver
 ```
+
+or you can download the executable from [Github releases](https://github.com/robertohuertasm/microserver/releases) and add it to your path.
+
+## Usage
 
 No argument is mandatory so the current folder will be used as default if no path is specified
 
