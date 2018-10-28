@@ -15,6 +15,7 @@ script:
   - cargo fmt --all -- --check
   - cargo clippy --all -- -D clippy_pedantic
   - cargo build --release
+  - chmod +x target/release/microserver
 deploy:
   provider: releases
   api_key: $gh_key
