@@ -19,6 +19,7 @@ stages:
   # - name: deploy
   #   if: tag IS present
 before_script:
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then echo hola ; fi
   - rustup component add rustfmt-preview
   - rustup component add clippy-preview --toolchain=nightly
 script:
@@ -31,10 +32,13 @@ script:
   - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then mv target/release/microserver.gz microserver_osx.gz ; fi
   - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then mv target/release/microserver.gz microserver_windows.gz ; fi
 deploy:
-  if: tag IS present
+  # if: tag IS present
   provider: releases
   api_key: $gh_key
-  file: if $TRAVIS_OS_NAME == "linux"; then microserver_linux.gz; elif $TRAVIS_OS_NAME == "osx"; then microserver_osx.gz; else microserver_windows.gz; fi;
+  file:
+    - microserver_linux.gz
+    - microserver_osx.gz
+    - microserver_windows.gz
   skip_cleanup: true
   on:
     tags: true
