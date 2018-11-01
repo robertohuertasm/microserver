@@ -13,6 +13,8 @@ matrix:
   #   - rust: beta
   fast_finish: true
 stages:
+  - name: prep_osx
+    if: os = osx
   - test
   - name: deploy_linux
     if: tag IS present AND os = linux
@@ -22,6 +24,9 @@ stages:
     if: tag IS present AND os = windows
 jobs:
   include:
+    - stage: prep_osx
+      script:
+        - rustup default nightly
     - stage: test
       before_script:
         - rustup component add rustfmt-preview
