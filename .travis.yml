@@ -16,11 +16,11 @@ matrix:
 stages:
   - test
   - name: deploy_linux
-    if: os = linux
+    if: tag = true AND os = linux
   - name: deploy_osx
-    if: tag IS present AND os = osx
+    if: tag = true AND os = osx
   - name: deploy_windows
-    if: tag IS present AND os = windows
+    if: tag = true AND os = windows
 jobs:
   include:
     - stage: test
