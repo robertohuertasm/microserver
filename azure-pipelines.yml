@@ -5,6 +5,7 @@
 
 jobs:
   - job: Linux
+    displayName: Linux build
     pool:
       vmImage: 'Ubuntu 16.04' # other options: 'macOS 10.13', 'VS2017-Win2016'
 
@@ -44,4 +45,64 @@ jobs:
       #   inputs:
       #     PathtoPublish: '$(Build.ArtifactStagingDirectory)/target/release/microserver'
       #     ArtifactName: microserver
-  # - job: Windows macOS
+  - job: macOS
+    displayName: OSX build
+    pool:
+      vmImage: 'macOS-10.13'
+    steps:
+      - script: curl https://sh.rustup.rs -sSf | sh -s -- -y
+        displayName: 'Installing rust'
+
+      - script: |
+          export PATH=$HOME/.cargo/bin:$PATH
+          rustup install nightly
+          rustup default nightly
+        displayName: 'Setting nightly'
+
+      - script: |
+          export PATH=$HOME/.cargo/bin:$PATH
+          rustup component add rustfmt-preview
+          rustup component add clippy-preview --toolchain=nightly
+        displayName: 'installing Cargo components'
+
+      - script: |
+          export PATH=$HOME/.cargo/bin:$PATH
+          cargo fmt --all -- --check
+        displayName: 'Cargo fmt'
+
+      - script: |
+          export PATH=$HOME/.cargo/bin:$PATH
+          cargo clippy --all -- -D clippy::pedantic -A clippy::non-ascii-literal
+        displayName: 'Cargo clippy'
+  
+  - job: Windows
+    displayName: Windows build
+    pool:
+      vmImage: 'vs2017-win2016'
+    steps:
+    - script: |
+        echo Installing Rust
+        Invoke-WebRequest -Uri https://win.rustup.rs/ -Outfile rustup-init.exe
+        .\rustup-init.exe -y
+      displayName: 'Installing rust'
+    - script: |
+        $Env:PATH = $Env:PATH+$Env:USERPROFILE+'\.cargo\bin;'
+        rustup install nightly
+        rustup default nightly
+      displayName: 'Setting nightly'
+
+    - script: |
+        $Env:PATH = $Env:PATH+$Env:USERPROFILE+'\.cargo\bin;'
+        rustup component add rustfmt-preview
+        rustup component add clippy-preview --toolchain=nightly
+      displayName: 'installing Cargo components'
+
+    - script: |
+        $Env:PATH = $Env:PATH+$Env:USERPROFILE+'\.cargo\bin;'
+        cargo fmt --all -- --check
+      displayName: 'Cargo fmt'
+
+    - script: |
+        $Env:PATH = $Env:PATH+$Env:USERPROFILE+'\.cargo\bin;'
+        cargo clippy --all -- -D clippy::pedantic -A clippy::non-ascii-literal
+      displayName: 'Cargo clippy'
