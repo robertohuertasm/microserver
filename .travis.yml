@@ -7,38 +7,34 @@ os:
   - linux
   - osx
   - windows
-# matrix:
-#   #   - rust: stable
-#   #   - rust: beta
-#   fast_finish: true
-stages:
-  - test
-  - deploy
-  # - name: deploy
-  #   if: tag IS present
-jobs:
+matrix:
+  #   - rust: stable
+  #   - rust: beta
   allow_failures:
     - os: osx
-  include:
-    - stage: test
-      before_script:
-        - rustup component add rustfmt-preview
-        - rustup component add clippy-preview --toolchain=nightly
-      script:
-        - cargo fmt --all -- --check
-        - cargo clippy --all -- -D clippy::pedantic
-    - stage: deploy
-      script:
-        - cargo build --release
-        - chmod +x target/release/microserver
-        - gzip -k target/release/microserver
-        - if [[ "$TRAVIS_OS_NAME" == "linux"]]; then mv target/release/microserver.gz microserver_linux.gz; fi
-        - if [[ "$TRAVIS_OS_NAME" == "osx"]]; then mv target/release/microserver.gz microserver_osx.gz; fi
-        - if [[ "$TRAVIS_OS_NAME" == "windows"]]; then mv target/release/microserver.gz microserver_windows.gz; fi
-      deploy:
-        provider: releases
-        api_key: $gh_key
-        file: if [[ "$TRAVIS_OS_NAME" == "linux"]]; then microserver_linux.gz; elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then microserver_osx.gz; else;   microserver_windows.gz; fi;
-        skip_cleanup: true
-        on:
-          tags: true
+  fast_finish: true
+stages:
+  - name: test
+  - name: deploy
+  # - name: deploy
+  #   if: tag IS present
+before_script:
+  - rustup component add rustfmt-preview
+  - rustup component add clippy-preview --toolchain=nightly
+script:
+  - cargo fmt --all -- --check
+  - cargo clippy --all -- -D clippy::pedantic
+  - cargo build --release
+  - chmod +x target/release/microserver
+  - gzip -k target/release/microserver
+  - if [[ "$TRAVIS_OS_NAME" == "linux"]]; then mv target/release/microserver.gz microserver_linux.gz; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx"]]; then mv target/release/microserver.gz microserver_osx.gz; fi
+  - if [[ "$TRAVIS_OS_NAME" == "windows"]]; then mv target/release/microserver.gz microserver_windows.gz; fi
+deploy:
+  # if: tag IS present
+  provider: releases
+  api_key: $gh_key
+  file: if [[ "$TRAVIS_OS_NAME" == "linux"]]; then microserver_linux.gz; elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then microserver_osx.gz; else;   microserver_windows.gz; fi;
+  skip_cleanup: true
+  on:
+    tags: true
