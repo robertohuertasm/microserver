@@ -16,7 +16,7 @@ matrix:
 stages:
   - test
   - name: deploy_linux
-    if: tag IS present AND os = linux
+    if: os = linux
   - name: deploy_osx
     if: tag IS present AND os = osx
   - name: deploy_windows
