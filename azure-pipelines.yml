@@ -44,7 +44,8 @@ jobs:
         displayName: 'Publish Artifact: microserver'
         inputs:
           PathtoPublish: '$(System.DefaultWorkingDirectory)/target/release/microserver'
-          ArtifactName: microserver
+          ArtifactName: microserver-linux
+
   - job: macOS
     displayName: OSX build
     continueOnError: true
@@ -75,6 +76,12 @@ jobs:
           export PATH=$HOME/.cargo/bin:$PATH
           cargo clippy --all -- -D clippy::pedantic -A clippy::non-ascii-literal
         displayName: 'Cargo clippy'
+
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Artifact: microserver'
+        inputs:
+          PathtoPublish: '$(System.DefaultWorkingDirectory)/target/release/microserver'
+          ArtifactName: microserver-osx
   
   - job: Windows
     displayName: Windows build
@@ -107,3 +114,9 @@ jobs:
         SET PATH=%PATH%;%USERPROFILE%\.cargo\bin;
         cargo clippy --all -- -D clippy::pedantic -A clippy::non-ascii-literal
       displayName: 'Cargo clippy'
+    
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: microserver'
+      inputs:
+        PathtoPublish: '$(System.DefaultWorkingDirectory)/target/release/microserver'
+        ArtifactName: microserver-windows
