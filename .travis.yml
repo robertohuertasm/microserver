@@ -3,6 +3,10 @@ rust:
   # - stable
   # - beta
   - nightly
+os:
+  - linux
+  - osx
+  - windows
 matrix:
   # allow_failures:
   #   - rust: stable
@@ -10,8 +14,12 @@ matrix:
   fast_finish: true
 stages:
   - test
-  - name: deploy
-    if: tag IS present
+  - name: deploy_linux
+    if: tag IS present AND os = linux
+  - name: deploy_osx
+    if: tag IS present AND os = osx
+  - name: deploy_windows
+    if: tag IS present AND os = windows
 jobs:
   include:
     - stage: test
@@ -21,14 +29,42 @@ jobs:
       script:
         - cargo fmt --all -- --check
         - cargo clippy --all -- -D clippy::pedantic
-    - stage: deploy
+    - stage: deploy_linux
       script:
         - cargo build --release
         - chmod +x target/release/microserver
+        - gzip -k target/release/microserver
+        - mv target/release/microserver.gz microserver_linux.gz
       deploy:
         provider: releases
         api_key: $gh_key
-        file: target/release/microserver
+        file: microserver_linux.gz
         skip_cleanup: true
         on:
           tags: true
+    - stage: deploy_osx
+      script:
+        - cargo build --release
+        - chmod +x target/release/microserver
+        - gzip -k target/release/microserver
+        - mv target/release/microserver.gz microserver_osx.gz
+      deploy:
+        provider: releases
+        api_key: $gh_key
+        file: microserver_osx.gz
+        skip_cleanup: true
+        on:
+          tags: true
+    - stage: deploy_windows
+      script:
+        - cargo build --release
+        - chmod +x target/release/microserver
+        - gzip -k target/release/microserver
+        - mv target/release/microserver.gz microserver_windows.gz
+      deploy:
+        provider: releases
+        api_key: $gh_key
+        file: microserver_windows.gz
+        skip_cleanup: true
+        on:
+          tags: true  
