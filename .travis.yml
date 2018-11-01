@@ -1,17 +1,19 @@
-language: rust
+
 matrix:
   include:
+    - language: rust
     - rust:
-      - beta
+      # - beta
       - nightly
     - os:
       - linux
       - osx
       - windows
   allow_failures:
-  #   - rust: stable
-  #   - rust: beta
-    - rust: nightly
+    # - rust: stable
+    # - rust: beta
+    # - rust: nightly
+    - os: osx
   fast_finish: true
 stages:
   - test
