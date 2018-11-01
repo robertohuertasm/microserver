@@ -91,22 +91,32 @@ jobs:
     - powershell: |
         $Env:PATH = $Env:PATH+$Env:USERPROFILE+'\.cargo\bin;'
         ls $Env:USERPROFILE\.cargo\bin
-        rustup install nightly
-        rustup default nightly
+        $rustup = $Env:USERPROFILE+'\.cargo\bin\rustup.exe'
+        Start-Process -NoNewWindow -FilePath $rustup -ArgumentList 'install nightly'
+        Start-Process -NoNewWindow -FilePath $rustup -ArgumentList 'default nightly'
+        # rustup install nightly
+        # rustup default nightly
       displayName: 'Setting nightly'
 
     - powershell: |
-        $Env:PATH = $Env:PATH+$Env:USERPROFILE+'\.cargo\bin;'
-        rustup component add rustfmt-preview
-        rustup component add clippy-preview --toolchain=nightly
+        $rustup = $Env:USERPROFILE+'\.cargo\bin\rustup.exe'
+        Start-Process -NoNewWindow -FilePath $rustup -ArgumentList 'component add rustfmt-preview'
+        Start-Process -NoNewWindow -FilePath $rustup -ArgumentList 'component add clippy-preview --toolchain=nightly'
+        # $Env:PATH = $Env:PATH+$Env:USERPROFILE+'\.cargo\bin;'
+        # rustup component add rustfmt-preview
+        # rustup component add clippy-preview --toolchain=nightly
       displayName: 'installing Cargo components'
 
     - powershell: |
-        $Env:PATH = $Env:PATH+$Env:USERPROFILE+'\.cargo\bin;'
-        cargo fmt --all -- --check
+        $cargo = $Env:USERPROFILE+'\.cargo\bin\cargo.exe'
+        Start-Process -NoNewWindow -FilePath $cargo -ArgumentList 'fmt --all -- --check'
+        # $Env:PATH = $Env:PATH+$Env:USERPROFILE+'\.cargo\bin;'
+        # cargo fmt --all -- --check
       displayName: 'Cargo fmt'
 
     - powershell: |
-        $Env:PATH = $Env:PATH+$Env:USERPROFILE+'\.cargo\bin;'
-        cargo clippy --all -- -D clippy::pedantic -A clippy::non-ascii-literal
+        $cargo = $Env:USERPROFILE+'\.cargo\bin\cargo.exe'
+        Start-Process -NoNewWindow -FilePath $cargo -ArgumentList ' clippy --all -- -D clippy::pedantic -A clippy::non-ascii-literal'
+        # $Env:PATH = $Env:PATH+$Env:USERPROFILE+'\.cargo\bin;'
+        # cargo clippy --all -- -D clippy::pedantic -A clippy::non-ascii-literal
       displayName: 'Cargo clippy'
