@@ -80,29 +80,29 @@ jobs:
     pool:
       vmImage: 'vs2017-win2016'
     steps:
-    - script: |
-        echo Installing Rust
+    - powershell: |
         Invoke-WebRequest -Uri https://win.rustup.rs/ -Outfile rustup-init.exe
         .\rustup-init.exe -y
       displayName: 'Installing rust'
-    - script: |
+
+    - powershell: |
         $Env:PATH = $Env:PATH+$Env:USERPROFILE+'\.cargo\bin;'
         rustup install nightly
         rustup default nightly
       displayName: 'Setting nightly'
 
-    - script: |
+    - powershell: |
         $Env:PATH = $Env:PATH+$Env:USERPROFILE+'\.cargo\bin;'
         rustup component add rustfmt-preview
         rustup component add clippy-preview --toolchain=nightly
       displayName: 'installing Cargo components'
 
-    - script: |
+    - powershell: |
         $Env:PATH = $Env:PATH+$Env:USERPROFILE+'\.cargo\bin;'
         cargo fmt --all -- --check
       displayName: 'Cargo fmt'
 
-    - script: |
+    - powershell: |
         $Env:PATH = $Env:PATH+$Env:USERPROFILE+'\.cargo\bin;'
         cargo clippy --all -- -D clippy::pedantic -A clippy::non-ascii-literal
       displayName: 'Cargo clippy'
