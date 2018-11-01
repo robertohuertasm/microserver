@@ -15,12 +15,8 @@ matrix:
   fast_finish: true
 stages:
   - test
-  - name: deploy_linux
-    if: tag = true AND os = linux
-  - name: deploy_osx
-    if: tag = true AND os = osx
-  - name: deploy_windows
-    if: tag = true AND os = windows
+  - name: deploy
+    if: tag IS present
 jobs:
   include:
     - stage: test
@@ -30,42 +26,18 @@ jobs:
       script:
         - cargo fmt --all -- --check
         - cargo clippy --all -- -D clippy::pedantic
-    - stage: deploy_linux
+    - stage: deploy
       script:
         - cargo build --release
         - chmod +x target/release/microserver
         - gzip -k target/release/microserver
-        - mv target/release/microserver.gz microserver_linux.gz
+        - if [[ "$TRAVIS_OS_NAME" == "linux"]]; then mv target/release/microserver.gz microserver_linux.gz; fi
+        - if [[ "$TRAVIS_OS_NAME" == "osx"]]; then mv target/release/microserver.gz microserver_osx.gz; fi
+        - if [[ "$TRAVIS_OS_NAME" == "windows"]]; then mv target/release/microserver.gz microserver_windows.gz; fi
       deploy:
         provider: releases
         api_key: $gh_key
-        file: microserver_linux.gz
+        file: if [[ "$TRAVIS_OS_NAME" == "linux"]]; then microserver_linux.gz; elif [[ "$TRAVIS_OS_NAME" == "osx" ]]; then microserver_osx.gz; else;   microserver_windows.gz; fi;
         skip_cleanup: true
         on:
           tags: true
-    - stage: deploy_osx
-      script:
-        - cargo build --release
-        - chmod +x target/release/microserver
-        - gzip -k target/release/microserver
-        - mv target/release/microserver.gz microserver_osx.gz
-      deploy:
-        provider: releases
-        api_key: $gh_key
-        file: microserver_osx.gz
-        skip_cleanup: true
-        on:
-          tags: true
-    - stage: deploy_windows
-      script:
-        - cargo build --release
-        - chmod +x target/release/microserver
-        - gzip -k target/release/microserver
-        - mv target/release/microserver.gz microserver_windows.gz
-      deploy:
-        provider: releases
-        api_key: $gh_key
-        file: microserver_windows.gz
-        skip_cleanup: true
-        on:
-          tags: true  
