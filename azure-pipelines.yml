@@ -35,16 +35,16 @@ jobs:
           cargo clippy --all -- -D clippy::pedantic -A clippy::non-ascii-literal
         displayName: 'Cargo clippy'
 
-      # - script: |
-      #     export PATH=$HOME/.cargo/bin:$PATH
-      #     cargo build --release
-      #   displayName: 'Build'
+      - script: |
+          export PATH=$HOME/.cargo/bin:$PATH
+          cargo build --release
+        displayName: 'Build'
 
-      # - task: PublishBuildArtifacts@1
-      #   displayName: 'Publish Artifact: microserver'
-      #   inputs:
-      #     PathtoPublish: '$(Build.ArtifactStagingDirectory)/target/release/microserver'
-      #     ArtifactName: microserver
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Artifact: microserver'
+        inputs:
+          PathtoPublish: '$(System.DefaultWorkingDirectory)/target/release/microserver'
+          ArtifactName: microserver
   - job: macOS
     displayName: OSX build
     continueOnError: true
