@@ -47,6 +47,7 @@ jobs:
       #     ArtifactName: microserver
   - job: macOS
     displayName: OSX build
+    continueOnError: true
     pool:
       vmImage: 'macOS-10.13'
     steps:
