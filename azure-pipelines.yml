@@ -81,12 +81,16 @@ jobs:
       vmImage: 'vs2017-win2016'
     steps:
     - powershell: |
+        echo $Env:PATH
+        echo $Env:USERPROFILE
+    - powershell: |
         Invoke-WebRequest -Uri https://win.rustup.rs/ -Outfile rustup-init.exe
         .\rustup-init.exe -y
       displayName: 'Installing rust'
 
     - powershell: |
         $Env:PATH = $Env:PATH+$Env:USERPROFILE+'\.cargo\bin;'
+        ls $Env:USERPROFILE\.cargo\bin
         rustup install nightly
         rustup default nightly
       displayName: 'Setting nightly'
