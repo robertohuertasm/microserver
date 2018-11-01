@@ -26,10 +26,10 @@ script:
   - cargo clippy --all -- -D clippy::pedantic
   - cargo build --release
   - chmod +x target/release/microserver
-  - gzip -k target/release/microserver
-  - if $TRAVIS_OS_NAME == "linux"; then mv target/release/microserver.gz microserver_linux.gz; fi
-  - if $TRAVIS_OS_NAME == "osx"; then mv target/release/microserver.gz microserver_osx.gz; fi
-  - if $TRAVIS_OS_NAME == "windows"; then mv target/release/microserver.gz microserver_windows.gz; fi
+  - gzip -k -f target/release/microserver
+  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then mv target/release/microserver.gz microserver_linux.gz ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "osx" ]]; then mv target/release/microserver.gz microserver_osx.gz ; fi
+  - if [[ "$TRAVIS_OS_NAME" == "windows" ]]; then mv target/release/microserver.gz microserver_windows.gz ; fi
 deploy:
   if: tag IS present
   provider: releases
