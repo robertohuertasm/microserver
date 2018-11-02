@@ -19,7 +19,6 @@ stages:
   # - name: deploy
   #   if: tag IS present
 before_script:
-  - if [[ "$TRAVIS_OS_NAME" == "linux" ]]; then echo hola ; fi
   - rustup component add rustfmt-preview
   - rustup component add clippy-preview --toolchain=nightly
 script:
