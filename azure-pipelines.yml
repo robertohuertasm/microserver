@@ -128,5 +128,5 @@ jobs:
     - task: PublishBuildArtifacts@1
       displayName: 'Publish Artifact: microserver'
       inputs:
-        PathtoPublish: '$(System.DefaultWorkingDirectory)/target/release/microserver'
+        PathtoPublish: '$(System.DefaultWorkingDirectory)/target/release/microserver.exe'
         ArtifactName: microserver-windows
