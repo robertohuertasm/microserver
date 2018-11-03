@@ -40,11 +40,11 @@ jobs:
           cargo build --release
         displayName: 'Build'
 
-      # - task: PublishBuildArtifacts@1
-      #   displayName: 'Publish Artifact: microserver'
-      #   inputs:
-      #     PathtoPublish: '$(System.DefaultWorkingDirectory)/target/release/microserver'
-      #     ArtifactName: microserver-linux
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Artifact: microserver'
+        inputs:
+          PathtoPublish: '$(System.DefaultWorkingDirectory)/target/release/microserver'
+          ArtifactName: microserver-linux
 
   - job: macOS
     displayName: OSX build
@@ -77,11 +77,16 @@ jobs:
           cargo clippy --all -- -D clippy::pedantic -A clippy::non-ascii-literal
         displayName: 'Cargo clippy'
 
-      # - task: PublishBuildArtifacts@1
-      #   displayName: 'Publish Artifact: microserver'
-      #   inputs:
-      #     PathtoPublish: '$(System.DefaultWorkingDirectory)/target/release/microserver'
-      #     ArtifactName: microserver-osx
+      - script: |
+          export PATH=$HOME/.cargo/bin:$PATH
+          cargo build --release
+        displayName: 'Build'
+
+      - task: PublishBuildArtifacts@1
+        displayName: 'Publish Artifact: microserver'
+        inputs:
+          PathtoPublish: '$(System.DefaultWorkingDirectory)/target/release/microserver'
+          ArtifactName: microserver-osx
   
   - job: Windows
     displayName: Windows build
@@ -114,9 +119,14 @@ jobs:
         SET PATH=%PATH%;%USERPROFILE%\.cargo\bin;
         cargo clippy --all -- -D clippy::pedantic -A clippy::non-ascii-literal
       displayName: 'Cargo clippy'
+
+    - script: |
+          export PATH=$HOME/.cargo/bin:$PATH
+          cargo build --release
+      displayName: 'Build'
     
-    # - task: PublishBuildArtifacts@1
-    #   displayName: 'Publish Artifact: microserver'
-    #   inputs:
-    #     PathtoPublish: '$(System.DefaultWorkingDirectory)/target/release/microserver'
-    #     ArtifactName: microserver-windows
+    - task: PublishBuildArtifacts@1
+      displayName: 'Publish Artifact: microserver'
+      inputs:
+        PathtoPublish: '$(System.DefaultWorkingDirectory)/target/release/microserver'
+        ArtifactName: microserver-windows
