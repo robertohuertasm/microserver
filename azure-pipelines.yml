@@ -121,8 +121,8 @@ jobs:
       displayName: 'Cargo clippy'
 
     - script: |
-          export PATH=$HOME/.cargo/bin:$PATH
-          cargo build --release
+        export PATH=$HOME/.cargo/bin:$PATH
+        cargo build --release
       displayName: 'Build'
     
     - task: PublishBuildArtifacts@1
