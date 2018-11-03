@@ -18,7 +18,7 @@ before_script:
   - rustup component add clippy-preview --toolchain=nightly
 script:
   - cargo fmt --all -- --check
-  - cargo clippy --all -- -D clippy::pedantic
+  - if [[ "$TRAVIS_OS_NAME" != "windows" ]]; then cargo clippy --all -- -D clippy::pedantic ; fi
   - cargo build --release
   - chmod +x target/release/microserver
   - gzip -k -f target/release/microserver
