@@ -11,13 +11,8 @@ matrix:
   #   - rust: stable
   #   - rust: beta
   allow_failures:
-    - os: osx
+    - os: windows
   fast_finish: true
-stages:
-  - name: test
-  - name: deploy
-  # - name: deploy
-  #   if: tag IS present
 before_script:
   - rustup component add rustfmt-preview
   - rustup component add clippy-preview --toolchain=nightly
