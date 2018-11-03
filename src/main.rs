@@ -7,7 +7,7 @@ use clap::{App, Arg};
 
 fn main() {
     let matches = App::new("microserver")
-        .version("0.0.1")
+        .version("0.1.4")
         .about("A micro server to run from your CLI with support for SPAs.\nBased on Warp!")
         .author("Roberto Huertas <roberto.huertas@outlook.com>")
         .arg(
