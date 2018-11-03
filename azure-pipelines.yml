@@ -121,7 +121,7 @@ jobs:
       displayName: 'Cargo clippy'
 
     - script: |
-        export PATH=$HOME/.cargo/bin:$PATH
+        SET PATH=%PATH%;%USERPROFILE%\.cargo\bin;
         cargo build --release
       displayName: 'Build'
     
