@@ -20,10 +20,12 @@ pub fn start(port: u16, path: String, is_spa: bool, spa_index: &str) {
 
     let files = warp::fs::dir(path);
     let spa = warp::any()
-        .and_then(move || if is_spa {
-            Ok(is_spa)
-        } else {
-            Err(warp::reject::not_found())
+        .and_then(move || {
+            if is_spa {
+                Ok(is_spa)
+            } else {
+                Err(warp::reject::not_found())
+            }
         })
         .and(warp::fs::file(spa_index_path))
         .map(|_, file| file);

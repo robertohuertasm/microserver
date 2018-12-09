@@ -13,16 +13,16 @@ jobs:
       - script: curl https://sh.rustup.rs -sSf | sh -s -- -y
         displayName: 'Install rust'
 
-      - script: |
-          export PATH=$HOME/.cargo/bin:$PATH
-          rustup install nightly
-          rustup default nightly
-        displayName: 'Setting nightly'
+#      - script: |
+#          export PATH=$HOME/.cargo/bin:$PATH
+#          rustup install nightly
+#          rustup default nightly
+#        displayName: 'Setting nightly'
 
       - script: |
           export PATH=$HOME/.cargo/bin:$PATH
           rustup component add rustfmt-preview
-          rustup component add clippy-preview --toolchain=nightly
+          rustup component add clippy-preview
         displayName: 'installing Cargo components'
 
       - script: |
@@ -55,16 +55,16 @@ jobs:
       - script: curl https://sh.rustup.rs -sSf | sh -s -- -y
         displayName: 'Installing rust'
 
-      - script: |
-          export PATH=$HOME/.cargo/bin:$PATH
-          rustup install nightly
-          rustup default nightly
-        displayName: 'Setting nightly'
+#      - script: |
+#          export PATH=$HOME/.cargo/bin:$PATH
+#          rustup install nightly
+#          rustup default nightly
+#        displayName: 'Setting nightly'
 
       - script: |
           export PATH=$HOME/.cargo/bin:$PATH
           rustup component add rustfmt-preview
-          rustup component add clippy-preview --toolchain=nightly
+          rustup component add clippy-preview
         displayName: 'installing Cargo components'
 
       - script: |
@@ -98,16 +98,16 @@ jobs:
         .\rustup-init.exe -y
       displayName: 'Installing rust'
 
-    - script: |
-        SET PATH=%PATH%;%USERPROFILE%\.cargo\bin;
-        rustup install nightly
-        rustup default nightly
-      displayName: 'Setting nightly'
+#    - script: |
+#        SET PATH=%PATH%;%USERPROFILE%\.cargo\bin;
+#        rustup install nightly
+#        rustup default nightly
+#      displayName: 'Setting nightly'
 
     - script: |
         SET PATH=%PATH%;%USERPROFILE%\.cargo\bin;
         rustup component add rustfmt-preview
-        rustup component add clippy-preview --toolchain=nightly
+        rustup component add clippy-preview
       displayName: 'installing Cargo components'
 
     - script: |
