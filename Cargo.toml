@@ -21,6 +21,6 @@ travis-ci = { repository = "robertohuertasm/microserver", branch = "master" }
 azure-devops = { project = "robertohuertasm/github-oss", pipeline = "microserver", build="2" }
 
 [dependencies]
-warp = "0.1.9"
-clap = "2.32.0"
-console = "0.7.1"
+warp = "0.1"
+clap = "2.33"
+console = "0.9"

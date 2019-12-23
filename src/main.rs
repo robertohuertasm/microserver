@@ -6,8 +6,8 @@ mod server;
 use clap::{App, Arg};
 
 fn main() {
-    let matches = App::new("microserver")
-        .version("0.1.5")
+    let matches = App::new(env!("CARGO_PKG_NAME"))
+        .version(env!("CARGO_PKG_VERSION"))
         .about("A micro server to run from your CLI with support for SPAs.\nBased on Warp!")
         .author("Roberto Huertas <roberto.huertas@outlook.com>")
         .arg(
