@@ -17,8 +17,6 @@ exclude = [
 
 [badges]
 maintenance = { status = "actively-developed" }
-travis-ci = { repository = "robertohuertasm/microserver", branch = "master" }
-azure-devops = { project = "robertohuertasm/github-oss", pipeline = "microserver", build="2" }
 
 [dependencies]
 warp = "0.1"
