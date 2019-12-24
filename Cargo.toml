@@ -24,3 +24,6 @@ azure-devops = { project = "robertohuertasm/github-oss", pipeline = "microserver
 warp = "0.1"
 clap = "2.33"
 console = "0.9"
+
+[profile.release]
+lto = true
