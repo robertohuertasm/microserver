@@ -1,0 +1,66 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+jobs:
+  release:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        rust: [stable]
+        os: [ubuntu-latest, macOS-latest, windows-latest]
+        include:
+          - os: ubuntu-latest
+            rust: stable
+            artifact_name: microserver
+            asset_name: microserver_linux.gz
+          - os: macOS-latest
+            rust: stable
+            artifact_name: microserver
+            asset_name: microserver_osx.gz
+          - os: windows-latest
+            rust: stable
+            artifact_name: microserver.exe
+            asset_name: microserver_windows.gz
+    steps:
+      - name: Setup Rust
+        uses: hecrj/setup-rust-action@master
+        with:
+          rust-version: stable
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Build artifacts
+        shell: bash
+        run: |
+          echo "Building the project"
+          cargo build --release
+          echo "Preparing the artifact"
+          chmod +x "target/release/${{ matrix.artifact_name }}"
+          gzip -k -f "target/release/${{ matrix.artifact_name }}"
+          echo "moving target/release/${{ matrix.artifact_name }}.gz to ${{ matrix.asset_name }}"
+          mv "target/release/${{ matrix.artifact_name }}.gz" "${{ matrix.asset_name }}"
+      - name: Publishing to GitHub release
+        uses: svenstaro/upload-release-action@v1-release
+        with:
+          repo_token: ${{ secrets.GITHUB_TOKEN }}
+          file: ${{ matrix.asset_name }}
+          asset_name: ${{ matrix.asset_name }}
+          tag: ${{ github.ref }}
+
+  crates:
+    runs-on: ubuntu-latest
+    needs: [release]
+    steps:
+      - name: Setup Rust
+        uses: hecrj/setup-rust-action@master
+        with:
+          rust-version: stable
+      - name: Checkout
+        uses: actions/checkout@v2
+      - name: Publish to crates.io
+        run: |
+          cargo login ${{secrets.crates_key}}
+          cargo publish
