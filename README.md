@@ -1,6 +1,6 @@
 # microserver
 
-[![Build Status](https://travis-ci.org/robertohuertasm/microserver.svg?branch=master)](https://travis-ci.org/robertohuertasm/microserver) [![Build Status](https://dev.azure.com/robertohuertasm/github-oss/_apis/build/status/microserver)](https://dev.azure.com/robertohuertasm/github-oss/_build/latest?definitionId=2)
+[![Actions Status](https://github.com/robertohuertasm/microserver/workflows/Release/badge.svg)](https://github.com/robertohuertasm/microserver/actions)
 [![Crates.io](https://img.shields.io/crates/v/microserver.svg)](https://crates.io/crates/microserver)
 
 Simple ad-hoc server with SPA support based on Warp! Excellent for testing React, Angular, Vue apps and the like.
