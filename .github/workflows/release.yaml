@@ -16,15 +16,15 @@ jobs:
           - os: ubuntu-latest
             rust: stable
             artifact_name: microserver
-            asset_name: microserver_linux.gz
+            asset_name: microserver_linux.zip
           - os: macOS-latest
             rust: stable
             artifact_name: microserver
-            asset_name: microserver_osx.gz
+            asset_name: microserver_osx.zip
           - os: windows-latest
             rust: stable
             artifact_name: microserver.exe
-            asset_name: microserver_windows.gz
+            asset_name: microserver_windows.zip
     steps:
       - name: Setup Rust
         uses: hecrj/setup-rust-action@master
@@ -32,17 +32,27 @@ jobs:
           rust-version: stable
       - name: Checkout
         uses: actions/checkout@v2
-      - name: Build artifacts
+      - name: Build the crate for release
+        run: |
+          cargo build --release
+          ls -la target/release
+      - name: Apply upx
+        uses: svenstaro/upx-action@v1-release
+        with:
+          file: target/release/${{ matrix.artifact_name }}
+      - name: Zip the artifact
         shell: bash
         run: |
-          echo "Building the project"
-          cargo build --release
-          echo "Preparing the artifact"
-          chmod +x "target/release/${{ matrix.artifact_name }}"
-          gzip -k -f "target/release/${{ matrix.artifact_name }}"
-          echo "moving target/release/${{ matrix.artifact_name }}.gz to ${{ matrix.asset_name }}"
-          mv "target/release/${{ matrix.artifact_name }}.gz" "${{ matrix.asset_name }}"
-      - name: Publishing to GitHub release
+          echo "Setting exec permissions"
+          chmod +x ./target/release/${{ matrix.artifact_name }}
+          echo "Zipping"
+          if [[ "${{matrix.os}}" == "macOS-latest" ]]
+          then
+            zip ${{matrix.asset_name}} target/release/${{matrix.artifact_name}}
+          else
+            7z a ${{matrix.asset_name}} target/release/${{matrix.artifact_name}}
+          fi
+      - name: Upload binaries to GitHub release
         uses: svenstaro/upload-release-action@v1-release
         with:
           repo_token: ${{ secrets.GITHUB_TOKEN }}
