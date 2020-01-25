@@ -49,3 +49,54 @@ SPA support is enabled by default, meaning that if a resource is not found traff
 If you want to opt-out of this behavior just use the `--no-spa` flag.
 
 In the case you ever need to change the default `spa index` you can provide the `--spa-index` flag.
+
+## Docker
+
+There are several ways to use `microserver` with a [Docker image](https://hub.docker.com/repository/docker/robertohuertasm/microserver/):
+
+With a **Dockerfile** like the following:
+
+```dockerfile
+# please omit the version if you just want the latest
+FROM robertohuertasm/microserver:v0.1.6
+# public being the location of your app files
+COPY public/ /app/
+```
+
+You can also run your SPA / static site using:
+
+```bash
+$ docker build -t my-service:local .
+$ docker run -p 9090:9090 my-service:local
+MicroServer running on port 9090!
+Serving /app
+Spa support: true. Root: index.html
+```
+
+Alternatively, you could mount a volume with your content:
+
+```bash
+docker run -p 9090:9090 -v $(pwd)/public:/app robertohuertasm/microserver:v0.1.6
+```
+
+More complex Dockerfile usage example with a multi-stage build of a React SPA:
+
+```dockerfile
+FROM node:10.18-stretch-slim as builder
+WORKDIR /app
+COPY ./ /app
+RUN yarn
+RUN yarn build
+
+FROM robertohuertasm/microserver:v0.1.6
+COPY --from=builder /app/public /app/
+```
+
+### If you don't want the default arguments
+
+In this case whenever you run the `microserver` image, you'll have to be explicit about the arguments:
+
+```bash
+# don't forget to add "/app" as your final argument
+docker run -p 9090:9090 -v $(pwd)/public:/app robertohuertasm/microserver:v0.1.6 "/microserver" "--no-spa" "/app"
+```
