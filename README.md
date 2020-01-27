@@ -1,7 +1,7 @@
 # microserver
 
 [![Actions Status](https://github.com/robertohuertasm/microserver/workflows/Release/badge.svg)](https://github.com/robertohuertasm/microserver/actions)
-[![Crates.io](https://img.shields.io/crates/v/microserver.svg)](https://crates.io/crates/microserver)
+[![Crates.io](https://img.shields.io/crates/v/microserver.svg)](https://crates.io/crates/microserver) [![Docker Build](https://img.shields.io/docker/cloud/build/robertohuertasm/microserver.svg)](https://hub.docker.com/repository/docker/robertohuertasm/microserver) [![Docker Pulls](https://img.shields.io/docker/pulls/robertohuertasm/microserver.svg)](https://hub.docker.com/repository/docker/robertohuertasm/microserver)
 
 Simple ad-hoc server with SPA support based on Warp! Excellent for testing React, Angular, Vue apps and the like.
 
