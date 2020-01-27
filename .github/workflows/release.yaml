@@ -33,6 +33,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v2
       - name: Build the crate for release
+        shell: bash
         run: |
           cargo build --release
           ls -la target/release
