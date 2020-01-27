@@ -2,7 +2,7 @@ use console::style;
 use warp::Filter;
 
 //noinspection RsTypeCheck
-pub fn start(port: u16, path: String, is_spa: bool, spa_index: &str) {
+pub async fn start(port: u16, path: String, is_spa: bool, spa_index: &str) {
     let spa_index_path = format!("{}/{}", path, spa_index);
     println!(
         "{}",
@@ -21,10 +21,12 @@ pub fn start(port: u16, path: String, is_spa: bool, spa_index: &str) {
     let files = warp::fs::dir(path);
     let spa = warp::any()
         .and_then(move || {
-            if is_spa {
-                Ok(is_spa)
-            } else {
-                Err(warp::reject::not_found())
+            async move {
+                if is_spa {
+                    Ok(is_spa)
+                } else {
+                    Err(warp::reject::not_found())
+                }
             }
         })
         .and(warp::fs::file(spa_index_path))
@@ -37,5 +39,6 @@ pub fn start(port: u16, path: String, is_spa: bool, spa_index: &str) {
         println!("{:?}", file);
         file
     }))
-    .run(address);
+    .run(address)
+    .await;
 }
