@@ -63,7 +63,7 @@ FROM robertohuertasm/microserver:v0.1.6
 COPY public/ /app/
 ```
 
-You can also run your SPA / static site using:
+You can then run your SPA / static site using:
 
 ```bash
 $ docker build -t my-service:local .
