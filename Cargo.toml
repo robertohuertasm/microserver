@@ -1,7 +1,7 @@
 [package]
 name = "microserver"
 description = "Simple ad-hoc server with SPA support based on Warp!. Excellent for testing React, Angular, Vue apps and the like."
-version = "0.1.6"
+version = "0.1.7"
 authors = ["Roberto Huertas <roberto.huertas@outlook.com>"]
 edition = "2018"
 license = "MIT"
@@ -19,8 +19,9 @@ exclude = [
 maintenance = { status = "actively-developed" }
 
 [dependencies]
-warp = "0.1"
-clap = "2.33"
+warp = "0.2"
+tokio = { version = "0.2", features=["macros"]}
+clap = "2.33.0"
 console = "0.9"
 
 [profile.release]

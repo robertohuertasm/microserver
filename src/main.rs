@@ -1,11 +1,9 @@
-#![allow(dead_code)]
-#![allow(unused_variables)]
-
 mod server;
 
 use clap::{App, Arg};
 
-fn main() {
+#[tokio::main]
+async fn main() {
     let matches = App::new(env!("CARGO_PKG_NAME"))
         .version(env!("CARGO_PKG_VERSION"))
         .about("A micro server to run from your CLI with support for SPAs.\nBased on Warp!")
@@ -51,5 +49,5 @@ fn main() {
     let spa_index = matches.value_of("spa-index").unwrap();
 
     // TODO: verbose & param validations!
-    server::start(port, path.to_owned(), is_spa, spa_index);
+    server::start(port, path.to_owned(), is_spa, spa_index).await;
 }
