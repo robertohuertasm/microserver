@@ -20,9 +20,9 @@ maintenance = { status = "actively-developed" }
 
 [dependencies]
 warp = "0.2"
-tokio = { version = "0.2", features=["macros"]}
-clap = "2.33.0"
-console = "0.9"
+tokio = { version = "0.2", features = ["macros"] }
+clap = "2.33"
+console = "0.12"
 
 [profile.release]
 lto = true
