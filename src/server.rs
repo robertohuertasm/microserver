@@ -1,14 +1,19 @@
+use std::net::{IpAddr, SocketAddr};
+
 use console::style;
 use warp::Filter;
 
 //noinspection RsTypeCheck
-pub async fn start(port: u16, path: String, is_spa: bool, spa_index: &str) {
+pub async fn start(port: u16, path: String, is_spa: bool, spa_index: &str, address: &str) {
     let spa_index_path = format!("{}/{}", path, spa_index);
     println!(
         "{}",
-        style(format!("MicroServer running on port {}!", port))
-            .bold()
-            .green()
+        style(format!(
+            "MicroServer running on http://{}:{}!",
+            address, port
+        ))
+        .bold()
+        .green()
     );
     println!("{}", style(format!("Serving {}", path)).bold().blue());
     println!(
@@ -32,11 +37,22 @@ pub async fn start(port: u16, path: String, is_spa: bool, spa_index: &str) {
 
     let routes = files.or(spa);
 
-    let address = ([0, 0, 0, 0], port);
-    warp::serve(routes.map(|file| {
-        println!("{:?}", file);
-        file
-    }))
-    .run(address)
-    .await;
+    let ip: Result<IpAddr, _> = address.parse();
+    match ip {
+        Ok(ip) => {
+            let socket_adr: SocketAddr = (ip, port).into();
+            warp::serve(routes.map(|file| {
+                println!("{:?}", file);
+                file
+            }))
+            .run(socket_adr)
+            .await;
+        }
+        Err(e) => {
+            println!(
+                "{}",
+                style(format!("Something went wrong: {}", e)).bold().red()
+            );
+        }
+    }
 }
