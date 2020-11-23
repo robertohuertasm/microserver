@@ -35,6 +35,13 @@ microserver ./path/to/folder
 microserver -h
 ```
 
+## Changing the address
+
+```sh
+# by default microserver will use 0.0.0.0
+microserver -a 127.0.0.1
+```
+
 ## Changing the port
 
 ```sh

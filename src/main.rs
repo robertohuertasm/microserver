@@ -17,6 +17,13 @@ async fn main() {
                 .help("Sets the port."),
         )
         .arg(
+            Arg::with_name("address")
+                .long("address")
+                .short("a")
+                .default_value("0.0.0.0")
+                .help("Sets the address to use."),
+        )
+        .arg(
             Arg::with_name("no-spa")
                 .long("no-spa")
                 .short("n")
@@ -47,7 +54,8 @@ async fn main() {
     let path = matches.value_of("path").unwrap();
     let is_spa = !matches.is_present("no-spa");
     let spa_index = matches.value_of("spa-index").unwrap();
+    let address = matches.value_of("address").unwrap();
 
     // TODO: verbose & param validations!
-    server::start(port, path.to_owned(), is_spa, spa_index).await;
+    server::start(port, path.to_owned(), is_spa, spa_index, address).await;
 }
