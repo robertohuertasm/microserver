@@ -1,6 +1,6 @@
 [package]
 name = "microserver"
-description = "Simple ad-hoc server with SPA support based on Warp!. Excellent for testing React, Angular, Vue apps and the like."
+description = "Simple ad-hoc server with SPA support based on Warp! Excellent for testing React, Angular, Vue apps and the like."
 version = "0.2.0"
 authors = ["Roberto Huertas <roberto.huertas@outlook.com>"]
 edition = "2018"
@@ -12,7 +12,7 @@ categories = ["web-programming::http-server", "network-programming"]
 
 exclude = [
   "index.html",
-  "run.sh"
+  "run.sh",
 ]
 
 [badges]
