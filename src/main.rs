@@ -39,8 +39,6 @@ async fn main() {
         )
         .arg(
             Arg::new("path")
-                .long("path")
-                .short('t')
                 .default_value(".")
                 .help("The path to the files being served")
                 .index(1),
