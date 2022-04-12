@@ -3,12 +3,13 @@ name = "microserver"
 description = "Simple ad-hoc server with SPA support based on Warp! Excellent for testing React, Angular, Vue apps and the like."
 version = "0.2.0"
 authors = ["Roberto Huertas <roberto.huertas@outlook.com>"]
-edition = "2018"
+edition = "2021"
 license = "MIT"
 repository = "https://github.com/robertohuertasm/microserver"
 readme = "README.md"
 keywords = ["server", "spa", "simple", "http-server", "cli"]
 categories = ["web-programming::http-server", "network-programming"]
+rust-version = "1.59.0"
 
 exclude = [
   "index.html",
@@ -19,10 +20,13 @@ exclude = [
 maintenance = { status = "actively-developed" }
 
 [dependencies]
-warp = "0.2"
-tokio = { version = "0.2", features = ["macros"] }
-clap = "2.33"
-console = "0.12"
+warp = "0.3"
+tokio = { version = "1", features = ["macros", "rt-multi-thread"] }
+clap = "3"
+console = "0.15"
 
 [profile.release]
+opt-level = 3
 lto = true
+codegen-units = 1
+strip = true
