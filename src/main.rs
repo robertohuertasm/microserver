@@ -1,46 +1,46 @@
 mod server;
 
-use clap::{App, Arg};
+use clap::{Arg, Command};
 
 #[tokio::main]
 async fn main() {
-    let matches = App::new(env!("CARGO_PKG_NAME"))
+    let matches = Command::new(env!("CARGO_PKG_NAME"))
         .version(env!("CARGO_PKG_VERSION"))
         .about("A micro server to run from your CLI with support for SPAs.\nBased on Warp!")
         .author("Roberto Huertas <roberto.huertas@outlook.com>")
         .arg(
-            Arg::with_name("port")
+            Arg::new("port")
                 .long("port")
-                .short("p")
+                .short('p')
                 .default_value("9090")
                 .takes_value(true)
                 .help("Sets the port."),
         )
         .arg(
-            Arg::with_name("address")
+            Arg::new("address")
                 .long("address")
-                .short("a")
+                .short('a')
                 .default_value("0.0.0.0")
                 .help("Sets the address to use."),
         )
         .arg(
-            Arg::with_name("no-spa")
+            Arg::new("no-spa")
                 .long("no-spa")
-                .short("n")
+                .short('n')
                 .help("Removes support for Single Page Applications"),
         )
         .arg(
-            Arg::with_name("spa-index")
+            Arg::new("spa-index")
                 .long("spa-index")
-                .short("i")
+                .short('i')
                 .default_value("index.html")
                 .takes_value(true)
                 .help("Sets the name of the index document."),
         )
         .arg(
-            Arg::with_name("path")
+            Arg::new("path")
                 .long("path")
-                .short("t")
+                .short('t')
                 .default_value(".")
                 .help("The path to the files being served")
                 .index(1),
